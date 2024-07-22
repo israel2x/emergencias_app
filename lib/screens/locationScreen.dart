@@ -1,13 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 class LocationScreen extends StatefulWidget {
-  const LocationScreen({super.key});
+  //const LocationScreen({super.key});
 
   @override
-  State<LocationScreen> createState() => _LocationScreenState();
+  _LocationScreenState createState() => _LocationScreenState();
 }
 
 class _LocationScreenState extends State<LocationScreen> {
+  late double latitude;
+  late double longitude;
+
+  @override
+  void initState() {
+    super.initState();
+    print("INICIAR APLICACION");
+  }
+
+  void getMyPosition() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.low);
+
+    print(position.latitude);
+    print(position.longitude);
+
+    latitude = position.latitude;
+    longitude = position.longitude;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -20,7 +41,10 @@ class _LocationScreenState extends State<LocationScreen> {
             children: [
               Text("SOLICITAR AYUDA A LOS "),
               ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    getMyPosition();
+                    print("bomberos");
+                  },
                   style: ElevatedButton.styleFrom(
                       shape: CircleBorder(),
                       padding: EdgeInsets.all(60),
@@ -39,7 +63,9 @@ class _LocationScreenState extends State<LocationScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    getMyPosition();
+                  },
                   style: ElevatedButton.styleFrom(
                       shape: CircleBorder(),
                       padding: EdgeInsets.all(100),
@@ -58,7 +84,9 @@ class _LocationScreenState extends State<LocationScreen> {
             children: [
               Text("EMERGENCIAS MÉDICAS"),
               ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    getMyPosition();
+                  },
                   style: ElevatedButton.styleFrom(
                       shape: CircleBorder(),
                       padding: EdgeInsets.all(60),
